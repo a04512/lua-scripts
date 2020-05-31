@@ -1,8 +1,6 @@
 local Roshan = {}
 Roshan.Font = Renderer.LoadFont("Arial", 15, Enum.FontWeight.BOLD)
-Roshan.NotifierText = ""
 Roshan.AegisTime = 0
-Roshan.NextTime = 0
 Roshan.Time = 0
 time = 0
 timedraw = 0
