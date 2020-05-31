@@ -176,9 +176,8 @@ function lhtracker.OnDraw()
         lhtracker.reset()
     end
 
-    if Menu.IsEnabled(lhtracker.lhBarOnKey) == true then 
+    if Menu.IsEnabled(lhtracker.lhBarOnKey) == true then
         if not Menu.IsKeyDown(lhtracker.MenuKey) then return end 
-        return 
     end
 	
     if my_hero == nil then return end
