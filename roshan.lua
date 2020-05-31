@@ -1,11 +1,16 @@
-local Roshan = {}
+local Roshan = {
+    OptionEnable = Menu.AddOption({"typocant", "Roshan"}, "1. Enable", "Enable/Disable this script."),
+}
 Roshan.Font = Renderer.LoadFont("Arial", 15, Enum.FontWeight.BOLD)
+Roshan.NotifierText = ""
 Roshan.AegisTime = 0
+Roshan.NextTime = 0
 Roshan.Time = 0
 time = 0
 timedraw = 0
 
 function Roshan.OnUpdate()
+    if Menu.IsEnabled(Roshan.OptionEnable) == false then return end
     time = os.clock()
     if time > timedraw then
         timedraw = 0
@@ -13,6 +18,7 @@ function Roshan.OnUpdate()
 end
 
 function Roshan.OnUnitAnimation(animation)
+    if Menu.IsEnabled(Roshan.OptionEnable) == false then return end
     if not animation then return end
     local sqname = tostring(animation.sequenceName)
     if sqname == "roshan_attack" or sqname == "roshan_attack2" or sqname == "roshan_slam" then
@@ -25,6 +31,7 @@ function Roshan.OnUnitAnimation(animation)
 end
 
 function Roshan.OnChatEvent(chatEvent)
+    if Menu.IsEnabled(Roshan.OptionEnable) == false then return end
     if not Engine.IsInGame then return end
     if chatEvent.type == 9 and chatEvent.value == 135 then 
         Roshan.Time = ( GameRules.GetGameTime() - GameRules.GetGameStartTime() )
@@ -35,6 +42,7 @@ function Roshan.OnChatEvent(chatEvent)
 end
 
 function Roshan.OnDraw()
+    if Menu.IsEnabled(Roshan.OptionEnable) == false then return end
 	if Heroes.GetLocal() == nil then 
 		Roshan.Time = 0
 		Roshan.AegisTime = 0
@@ -47,11 +55,11 @@ function Roshan.OnDraw()
 		Renderer.SetDrawColor(29, 32, 39, 100)
 		Renderer.DrawFilledRect(c - (size / 2), math.floor(h * 0.00), size, 24)
 		Renderer.SetDrawColor(0, 0, 0, 200)
-		Renderer.DrawFilledRect(c - ((size / 2) - 2), math.floor(h * 0.065) + 2, size - 4, 20)
+		Renderer.DrawFilledRect(c - ((size / 2) - 2), math.floor(h * 0.062) + 2, size - 4, 20)
 		Renderer.SetDrawColor(255, 255, 255, 255)
-		Renderer.DrawTextCentered(Roshan.Font, c, math.floor(h * 0.065) + 11, "ROSHAN", 1)
+		Renderer.DrawTextCentered(Roshan.Font, c, math.floor(h * 0.062) + 11, "ROSHAN", 1)
 		Renderer.SetDrawColor(255, 0, 0, 150)
-		Renderer.DrawFilledRect(c - ((size / 2) - 2), math.floor(h * 0.065) + 22, size - 4, 2)
+		Renderer.DrawFilledRect(c - ((size / 2) - 2), math.floor(h * 0.062) + 22, size - 4, 2)
 	end
     if Roshan.Time == 0 then return end
     if Roshan.Time + 660 < ( GameRules.GetGameTime() - GameRules.GetGameStartTime() ) then Roshan.Time = 0 return end
