@@ -96,7 +96,7 @@ function lhtracker.OnGameEvent(event)
         attacker = Entities.GetEntityByIndex(recv_data.entindex_attacker)
         victim = Entities.GetEntityByIndex(recv_data.entindex_killed)
         
-        if Entity.IsEntity(attacker) and Entity.IsEntity(victim) then
+        if Entity.IsHero(attacker) and Entity.IsEntity(victim) then
             lhtracker.trackLH(enemy_team, recv_data, attacker, victim)
             lhtracker.trackLH(my_team, recv_data, attacker, victim)
         end
@@ -112,7 +112,9 @@ function lhtracker.trackLH(team, recv_data, attacker, victim)
         local attacker_owner = tostring(Entity.GetField(attacker, "m_nPlayerOwnerID"))
         
         if attacker_owner == "-1" then
-            attacker_owner = tostring(Player.GetPlayerID(Entity.GetOwner(attacker)))
+            if Entity.IsPlayer(Entity.GetOwner(attacker)) then
+                attacker_owner = tostring(Player.GetPlayerID(Entity.GetOwner(attacker)))
+            end
         end
         
         if player_track[attacker_owner] == nil then
