@@ -19,13 +19,11 @@ function Roshan.OnUpdate()
 end
 
 function Roshan.OnGameEvent(event)
-    victim = Entities.GetEntityByIndex(event.data.entindex_killed)
-    if victim and NPC.GetUnitName(victim) == "npc_dota_roshan" then
-        if Roshan.Time ~= 0 or Roshan.AegisTime ~= 0 then
-            Roshan.Time = 0
-            Roshan.AegisTime = 0
+    if event.data.entindex_killed then
+        victim = Entities.GetEntityByIndex(event.data.entindex_killed)
+        if victim and NPC.GetUnitName(victim) == "npc_dota_roshan" then
+            timedraw = os.clock() + 5
         end
-        timedraw = os.clock() + 5
     end
 end
 
