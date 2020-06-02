@@ -15,13 +15,12 @@ function Roshan.OnUpdate()
     if time > timedraw then
         timedraw = 0
     end
+    GameEvents.StartListening("entity_killed")
 end
 
-function Roshan.OnUnitAnimation(animation)
-    if Menu.IsEnabled(Roshan.OptionEnable) == false then return end
-    if not animation then return end
-    local sqname = tostring(animation.sequenceName)
-    if sqname == "roshan_attack" or sqname == "roshan_attack2" or sqname == "roshan_slam" then
+function Roshan.OnGameEvent(event)
+    victim = Entities.GetEntityByIndex(event.data.entindex_killed)
+    if victim and NPC.GetUnitName(victim) == "npc_dota_roshan" then
         if Roshan.Time ~= 0 or Roshan.AegisTime ~= 0 then
             Roshan.Time = 0
             Roshan.AegisTime = 0
